@@ -3,6 +3,7 @@ import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 import argparse
 import os
+from bs4 import BeautifulSoup
 
 parser = argparse.ArgumentParser()
 parser.add_argument("in_file", help="Markdown file you want to convert to html")
@@ -30,7 +31,11 @@ with open("template.html", "r") as f:
 body = markdown.markdown(
     markdown_code, extensions=extensions
 )
+
 html = html.replace("{{ content }}", body)
+print("Beautifying the code...")
+soup = BeautifulSoup(html, "lxml")
+html = soup.prettify()
 
 with open(out_file, "w") as html_file:
     html_file.write(html)
