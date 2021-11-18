@@ -2,14 +2,15 @@
 import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
 import argparse
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("in_file", help="Markdown file you want to convert to html")
-parser.add_argument("out_file", help="Name of the output file")
 args = parser.parse_args()
 
 in_file = args.in_file
-out_file = args.out_file
+filename, _ = os.path.splitext(in_file)
+out_file = f"{filename}.html"
 
 with open(in_file, "r") as markdown_file:
     markdown_code = markdown_file.read()
